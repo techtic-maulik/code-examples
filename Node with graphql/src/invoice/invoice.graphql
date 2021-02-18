@@ -1,0 +1,46 @@
+
+type Invoice {
+  _id: Int
+  user_id: String
+  file: String
+  file_name: String
+  post_id: String
+  post: PostList
+  user: User
+  amount: Float
+  created_at: Date @dateTime
+  updated_at: Date @dateTime
+}
+type PostList {
+  title: String
+  description: String
+}
+
+input InvoiceDataTableInput  {
+  limit: Int
+  page: Int
+  search: Int
+  filter: String
+  post_id: String
+  start_date: Date
+  end_date: Date
+  filter_in: [DataTableFilters]
+  order: DataTableOrder
+  user_id: String
+}
+
+input InvoiceTableInput  {
+  limit: Int
+  page: Int
+}
+
+type InvoiceList {
+  data: [Invoice]
+  meta: PaginationMeta
+}
+
+type Query {
+  getByUser(input:InvoiceTableInput): InvoiceList
+  getAllInvoices(input:InvoiceDataTableInput): InvoiceList
+  createInvoice: InvoiceList
+}

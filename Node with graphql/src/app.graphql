@@ -1,0 +1,52 @@
+scalar JSON
+
+scalar Date
+
+directive @date on FIELD_DEFINITION
+
+directive @dateTime on FIELD_DEFINITION
+
+
+type DataTableInput {
+	limit: Int
+	page: Int
+	search: Int
+	order_by: String
+	order: String
+}
+
+input DataTableOrder {
+	direction: String
+	name: String
+	type: String
+}
+
+input DataTableFilters {
+	name: String
+	type: String
+}
+
+type PaginationMeta {
+	from: Int
+	to: Int
+	total: Int
+	per_page: Int
+	current_page: Int
+	last_page: Int
+}
+
+type SuccessResponse {
+	status: String
+	message: String
+	data: JSON
+}
+
+type AppInit {
+	user: User
+	settings: JSON
+	sport_types: JSON
+}
+
+type Query {
+	init: AppInit
+}

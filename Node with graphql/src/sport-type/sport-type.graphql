@@ -1,0 +1,46 @@
+type SportType {
+  _id: String
+  name: String
+  slug: String
+  status: String
+  created_at: Date @dateTime,
+  updated_at: Date @dateTime,
+}
+
+input SportTypeInput {
+  _id: String
+  name: String
+  slug: String
+  status: String
+}
+
+input SportTypeDataTableInput  {
+  limit: Int
+  page: Int
+  search: Int
+  filter: String
+  filter_in: [DataTableFilters]
+  order: DataTableOrder
+}
+
+type SportTypeList {
+  data: [SportType]
+  meta: PaginationMeta
+}
+
+type Query {
+  sportTypes(input:SportTypeDataTableInput): SportTypeList!
+  sportType(id:String!): SportType!
+  getSportTypes: [SportType]
+  getActiveSportTypes(type:Boolean): [SportType]
+}
+
+input UpdateSportOrderInput {
+  sportTypeData:JSON
+}
+
+type Mutation {
+  addSportType(input: SportTypeInput!): SuccessResponse
+  updateSportOrder(input: UpdateSportOrderInput!): SuccessResponse
+  deleteSportType(id: String!): SuccessResponse
+}

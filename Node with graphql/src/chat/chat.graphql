@@ -1,0 +1,64 @@
+type Message {
+	_id: String
+	user_id: String
+	user: User
+	contact_id: String
+	contact: User
+	message: String
+	status: String
+	data: JSON
+	created_at: Date @dateTime
+	updated_at: Date @dateTime
+}
+
+type Contact {
+	_id: String
+	user_id: String
+	user: User
+	contact_id: String
+	contact: User
+	status: String
+	unread: Int
+	last_message: Message
+	created_at: Date @dateTime
+	updated_at: Date @dateTime
+}
+
+type MessageList {
+	data: [Message]
+	meta: PaginationMeta
+}
+
+input MessageInput {
+	page: Int
+	limit: Int
+	user_id: String
+}
+
+input AddMessageInput {
+	user_id: String
+	message: String
+}
+
+input AddContactInput {
+	user_id: String
+	status: String
+}
+
+type Query {
+	getMessages(input: MessageInput): MessageList!
+	getContacts: [Contact]!
+	getContact(id: String!): Contact!
+}
+
+type Mutation {
+	addMessage(input: AddMessageInput!): Message
+	addContact(input: AddContactInput!): Contact
+	markAsRead(user_id: String!): Contact
+}
+
+type Subscription {
+	messageAdded: Message
+	messageTyping: Contact
+	messageRead: Contact
+}
